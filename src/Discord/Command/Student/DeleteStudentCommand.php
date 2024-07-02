@@ -33,21 +33,17 @@ class DeleteStudentCommand extends AbstractDiscordCommand
     {
         return [
             [
-                'name' => 'member-id',
-                'description' => "L'id du membre Discord",
+                'name' => 'member',
+                'description' => "Le membre Discord",
                 'required' => true,
-                'type' => Option::INTEGER,
+                'type' => Option::USER,
             ]
         ];
     }
 
     public function execute(Interaction $interaction): ?PromiseInterface
     {
-        $id = $interaction->data->options->get('name', 'member-id')?->value;
-
-        if ($id <= 0) {
-            return $interaction->respondWithMessage(MessageBuilder::new()->setContent("L'identifiant est inférieur à 0"));
-        }
+        $id = $interaction->data->options->get('name', 'member')->value;
 
         $student = $this->entityManager->getRepository(Student::class)->findOneBy(['memberId' => $id]);
 

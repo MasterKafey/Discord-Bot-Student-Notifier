@@ -50,6 +50,7 @@ readonly class ConfigBusiness
             'output_channel' => null,
             'inactivity_duration_day' => 1,
             'interval_notification_day' => 1,
+            'notifications_number_before_email' => 3,
             'category_student_channels' => null,
             'email_subject' => null,
             'email_text' => null,

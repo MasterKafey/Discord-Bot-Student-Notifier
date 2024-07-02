@@ -22,7 +22,9 @@ readonly class StudentListener
         $dayNumberInactivity = $this->configBusiness->get('inactivity_duration_day');
         $dayNumberNotification = $this->configBusiness->get('interval_notification_day');
 
-        $student->setIntervalInactivity(new \DateInterval('P' . $dayNumberInactivity . 'D'));
-        $student->setIntervalNotification(new \DateInterval('P' . $dayNumberNotification . 'D'));
+        $student
+            ->setIntervalInactivity(new \DateInterval('P' . $dayNumberInactivity . 'D'))
+            ->setIntervalNotification(new \DateInterval('P' . $dayNumberNotification . 'D'))
+        ;
     }
 }

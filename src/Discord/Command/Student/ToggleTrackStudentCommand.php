@@ -26,7 +26,7 @@ class ToggleTrackStudentCommand extends AbstractDiscordCommand
 
     public function getDescription(): string
     {
-        return "Activé/Désactivé le tracking d'un étudiant";
+        return "Activé/Désactivé la surveillance d'un étudiant";
     }
 
     public function getOptions(): array

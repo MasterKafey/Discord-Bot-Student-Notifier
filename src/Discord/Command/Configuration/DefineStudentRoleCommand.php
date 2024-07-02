@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Discord\Command\Student;
+namespace App\Discord\Command\Configuration;
 
 use App\Business\StudentBusiness;
 use App\Discord\Command\AbstractDiscordCommand;
