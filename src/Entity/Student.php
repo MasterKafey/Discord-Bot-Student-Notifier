@@ -44,7 +44,7 @@ class Student
     #[ORM\Column(type: Types::BOOLEAN)]
     private bool $tracking = true;
 
-    #[ORM\Column(type: Types::STRING)]
+    #[ORM\Column(type: Types::STRING, nullable: true)]
     private ?string $emailAddress = null;
 
     public function __construct()
