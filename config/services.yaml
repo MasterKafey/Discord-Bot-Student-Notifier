@@ -1,0 +1,43 @@
+parameters:
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'
+
+    App\Business\ConfigBusiness:
+        arguments:
+            $configFilePath: '%kernel.project_dir%/data/configuration.yaml'
+
+    Discord\Discord:
+        factory: [ 'App\Factory\DiscordFactory', 'getDiscord' ]
+        arguments:
+            $discordBotToken: '%env(DISCORD_BOT_TOKEN)%'
+
+    App\MessageHandler\Handler\CheckStudentActivityMessageHandler:
+        arguments:
+            $discordBotToken: '%env(DISCORD_BOT_TOKEN)%'
+
+    App\MessageHandler\Handler\AskEmailToSendMessageHandler:
+        arguments:
+            $discordBotToken: '%env(DISCORD_BOT_TOKEN)%'
+
+    App\MessageHandler\Handler\SendEmailToParentsMessageHandler:
+        arguments:
+            $from: '%env(MAILER_FROM)%'
+
+    _instanceof:
+        App\Discord\Command\AbstractDiscordCommand:
+            tags:
+                - { name: 'app.discord.command' }
+
+        App\Discord\EventListener\AbstractDiscordListener:
+            tags:
+                - { name: 'app.discord.listener' }
