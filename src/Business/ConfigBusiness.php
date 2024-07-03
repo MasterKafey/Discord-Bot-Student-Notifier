@@ -48,9 +48,9 @@ readonly class ConfigBusiness
         return [
             'student_role' => null,
             'output_channel' => null,
-            'inactivity_duration_day' => 1,
-            'interval_notification_day' => 1,
-            'notifications_number_before_email' => 3,
+            'inactivity_duration_day' => 3,
+            'interval_notification_day' => 3,
+            'notifications_number_before_email' => 1,
             'category_student_channels' => null,
             'email_subject' => null,
             'email_text' => null,
