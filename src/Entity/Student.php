@@ -33,10 +33,10 @@ class Student
     private ?\DateTime $lastNotification = null;
 
     #[ORM\Column(type: Types::INTEGER)]
-    private int $notificationBeforeMail = 3;
+    private int $notificationBeforeMail = 1;
 
     #[ORM\Column(type: Types::INTEGER)]
-    private int $currentNotificationBeforeMail = 3;
+    private int $currentNotificationBeforeMail = 1;
 
     #[ORM\Column(type: Types::STRING)]
     private ?string $channelId = null;
