@@ -69,6 +69,8 @@ class DefineMemberAsStudent extends AbstractDiscordCommand
 
         if ($student === null) {
             $student = new Student();
+            $student
+                ->setMemberId($memberId);
         }
 
         $role = $this->studentBusiness->getStudentRole();
@@ -83,6 +85,8 @@ class DefineMemberAsStudent extends AbstractDiscordCommand
         if (null === $member) {
             return $interaction->respondWithMessage(MessageBuilder::new()->setContent("L'utilisateur '$memberId' n'est pas accessible"));
         }
+
+        $student->setUsername($member->username);
 
         if (($channelId = $interaction->data->options->get('name', 'channel')?->value) !== null) {
             $channel = $this->channelBusiness->getChannel($channelId);
@@ -105,9 +109,6 @@ class DefineMemberAsStudent extends AbstractDiscordCommand
         } else {
             $member->addRole($role);
             $channel = $student->getChannelId() === null ? null : $this->channelBusiness->getStudentChannel($student);
-            $student
-                ->setUsername($member->username)
-                ->setMemberId($memberId);
 
             if ($channel === null || !$channel->getBotPermissions()->view_channel || !$channel->getBotPermissions()->send_messages) {
                 $bitwisePermissions = Permission::ALL_PERMISSIONS['view_channel'] | Permission::TEXT_PERMISSIONS['send_messages'];
