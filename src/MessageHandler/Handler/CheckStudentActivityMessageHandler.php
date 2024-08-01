@@ -46,18 +46,13 @@ class CheckStudentActivityMessageHandler
                 $sendNotification = $lastNotification === null || $now >= (clone $lastNotification)->add($intervalNotification);
 
                 if ($sendNotification) {
-                    if ($student->getCurrentNotificationBeforeMail() > 0) {
-                        $studentsToNotify[] = $student;
-                        $student
-                            ->setLastNotification($now)
-                            ->setCurrentNotificationBeforeMail($student->getNotificationBeforeMail() - 1);
-                    } else if ($student->getCurrentNotificationBeforeMail() === 0) {
+                    $studentsToNotify[] = $student;
+                    $student->setLastNotification($now);
+                    if ($student->getCurrentNotificationBeforeMail() === 0) {
                         $studentsToSendMail[] = $student;
-                        $student
-                            ->setLastNotification($now)
-                            ->setCurrentNotificationBeforeMail(-1);
                     }
 
+                    $student->setCurrentNotificationBeforeMail($student->getNotificationBeforeMail() - 1);
                     $this->entityManager->persist($student);
                 }
             }
