@@ -49,12 +49,12 @@ class ToggleTrackStudentCommand extends AbstractDiscordCommand
             'memberId' => $studentId,
         ]);
 
-        $student->setTracking(!$student->getTracking());
+        $student->setTracking(!$student->isTracking());
         $this->entityManager->persist($student);
         $this->entityManager->flush();
 
         return $interaction->respondWithMessage(MessageBuilder::new()->setContent(
-            "L'étudiant " . ($student->getTracking() ? "est de nouveau" : "n'est plus") . " suivi"
+            "L'étudiant " . ($student->isTracking() ? "est de nouveau" : "n'est plus") . " suivi"
         ));
     }
 }
