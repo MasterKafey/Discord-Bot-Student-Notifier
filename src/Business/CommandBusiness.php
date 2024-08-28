@@ -57,14 +57,15 @@ class CommandBusiness
 
         $index = 10;
         /** @var array $value */
-        foreach (array_merge([['file' => $throwable->getFile(), 'line' => $throwable->getLine()]], $throwable->getTrace()) as ['file' => $file, 'line' => $line]) {
+        foreach (array_merge([['file' => $throwable->getFile(), 'line' => $throwable->getLine()]], $throwable->getTrace()) as $error) {
             --$index;
+            $file = $error['file'] ?? null;
+            $line = $error['line'] ?? null;
             $lines[] = "**$line**:\t$file";
             if ($index <= 0) {
                 break;
             }
         }
-        dump($lines);
 
         return $interaction->respondWithMessage(MessageBuilder::new()->setContent(implode("\n", $lines)));
     }

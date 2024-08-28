@@ -4,6 +4,8 @@ services:
     _defaults:
         autowire: true
         autoconfigure: true
+        bind:
+            $discordBotToken: '%env(DISCORD_BOT_TOKEN)%'
 
     App\:
         resource: '../src/'
@@ -18,14 +20,6 @@ services:
 
     Discord\Discord:
         factory: [ 'App\Factory\DiscordFactory', 'getDiscord' ]
-        arguments:
-            $discordBotToken: '%env(DISCORD_BOT_TOKEN)%'
-
-    App\MessageHandler\Handler\CheckStudentActivityMessageHandler:
-        arguments:
-            $discordBotToken: '%env(DISCORD_BOT_TOKEN)%'
-
-    App\MessageHandler\Handler\AskEmailToSendMessageHandler:
         arguments:
             $discordBotToken: '%env(DISCORD_BOT_TOKEN)%'
 

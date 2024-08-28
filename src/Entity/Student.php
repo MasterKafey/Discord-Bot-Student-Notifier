@@ -47,6 +47,12 @@ class Student
     #[ORM\Column(type: Types::STRING, nullable: true)]
     private ?string $emailAddress = null;
 
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTime $lastTeacherNotification = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTime $unseenMessageDateTime = null;
+
     public function __construct()
     {
         $this->lastActivityDateTime = new \DateTime();
@@ -175,6 +181,28 @@ class Student
     public function setEmailAddress(?string $emailAddress): self
     {
         $this->emailAddress = $emailAddress;
+        return $this;
+    }
+
+    public function getLastTeacherNotification(): ?\DateTime
+    {
+        return $this->lastTeacherNotification;
+    }
+
+    public function setLastTeacherNotification(?\DateTime $lastTeacherNotification): self
+    {
+        $this->lastTeacherNotification = $lastTeacherNotification;
+        return $this;
+    }
+
+    public function getUnseenMessageDateTime(): ?\DateTime
+    {
+        return $this->unseenMessageDateTime;
+    }
+
+    public function setUnseenMessageDateTime(?\DateTime $unseenMessageDateTime): self
+    {
+        $this->unseenMessageDateTime = $unseenMessageDateTime;
         return $this;
     }
 }

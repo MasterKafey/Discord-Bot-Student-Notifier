@@ -16,6 +16,9 @@ use function React\Promise\all;
 #[AsCommand(name: 'app:run', description: 'Start discord bot')]
 class RunCommand extends Command
 {
+    const COMMAND_TO_DELETE = [
+        'get-incomplete-evaluation'
+    ];
 
     public function __construct(
         private readonly CommandBusiness  $commandBusiness,
@@ -36,6 +39,17 @@ class RunCommand extends Command
                     $promises[] = $guild->commands->delete($command);
                 }
             }
+
+            $promises[] = $this->discord->application->commands->freshen()->then(function ($commands) {
+                $promises = [];
+                foreach ($commands as $command) {
+                    if (in_array($command->name, self::COMMAND_TO_DELETE)) {
+                        $promises[] = $this->discord->application->commands->delete($command);
+                    }
+                }
+
+                return all($promises);
+            });
 
             all($promises)->then(function () {
                 $commands = $this->commandBusiness->getCommands();

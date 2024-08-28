@@ -27,8 +27,6 @@ class SendEmailActionListener extends AbstractDiscordListener
 
     public function __invoke(Interaction $interaction): void
     {
-        dump($interaction->type);
-
         $customId = $interaction->data->custom_id;
         [$action, $id] = explode(':', $customId);
 

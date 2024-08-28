@@ -24,10 +24,14 @@ class UpdateStudentActivityListener extends AbstractDiscordListener
 
     public function __invoke(Message $message): void
     {
-        $memberId = $message->member->id;
+        $memberId = $message->user_id;
         $student = $this->entityManager->getRepository(Student::class)->findOneBy(['memberId' => $memberId]);
 
         if (null === $student) {
+            return;
+        }
+
+        if ($student->getChannelId() !== $message->channel_id) {
             return;
         }
 
@@ -36,6 +40,10 @@ class UpdateStudentActivityListener extends AbstractDiscordListener
             ->setLastNotification(null)
             ->setCurrentNotificationBeforeMail($student->getNotificationBeforeMail())
         ;
+
+        if (null === $student->getUnseenMessageDateTime()) {
+            $student->setUnseenMessageDateTime(new \DateTime());
+        }
 
         $this->entityManager->persist($student);
         $this->entityManager->flush();

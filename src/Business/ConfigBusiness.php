@@ -7,7 +7,7 @@ use Symfony\Component\Yaml\Yaml;
 readonly class ConfigBusiness
 {
     public function __construct(
-        private readonly string $configFilePath,
+        private string $configFilePath,
     )
     {
 
@@ -55,6 +55,9 @@ readonly class ConfigBusiness
             'email_subject' => null,
             'email_text' => null,
             'automatic_emails' => false,
+            'teacher_notification_interval' => 'PT1H',
+            'teacher_account' => null,
+            'evaluation_preview_interval' => 'P3D',
         ];
     }
 }
