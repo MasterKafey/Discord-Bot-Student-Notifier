@@ -49,6 +49,10 @@ class ToggleTrackStudentCommand extends AbstractDiscordCommand
             'memberId' => $studentId,
         ]);
 
+        if (null === $student) {
+            return $interaction->respondWithMessage(MessageBuilder::new()->setContent("L'utilisateur <@$studentId> n'est pas un étudiant"));
+        }
+
         $student->setTracking(!$student->isTracking());
         $this->entityManager->persist($student);
         $this->entityManager->flush();

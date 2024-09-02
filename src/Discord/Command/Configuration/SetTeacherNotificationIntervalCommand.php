@@ -50,6 +50,6 @@ class SetTeacherNotificationIntervalCommand extends AbstractDiscordCommand
         }
 
         $this->configBusiness->set('teacher_notification_interval', "PT{$hour}H");
-        return $interaction->respondWithMessage(MessageBuilder::new()->setContent('Le professeur est correctement défini'));
+        return $interaction->respondWithMessage(MessageBuilder::new()->setContent('Le nombre d\'heure est correctement défini'));
     }
 }
