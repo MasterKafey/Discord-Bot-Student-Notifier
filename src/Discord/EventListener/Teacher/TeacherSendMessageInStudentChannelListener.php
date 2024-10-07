@@ -13,7 +13,7 @@ class TeacherSendMessageInStudentChannelListener extends AbstractDiscordListener
 {
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
-        private readonly ConfigBusiness $configBusiness
+        private readonly ConfigBusiness         $configBusiness
     )
     {
 
@@ -35,13 +35,14 @@ class TeacherSendMessageInStudentChannelListener extends AbstractDiscordListener
 
         $channelId = $message->channel_id;
 
-        $student = $this->entityManager->getRepository(Student::class)->findOneBy(['channelId' => $channelId]);
+        $students = $this->entityManager->getRepository(Student::class)->findBy(['channelId' => $channelId]);
 
-        if (null === $student) {
+        if (empty($students)) {
             return;
         }
-
-        $student->setUnseenMessageDateTime(null);
+        foreach ($students as $student) {
+            $student->setUnseenMessageDateTime(null);
+        }
         $this->entityManager->flush();
     }
 }

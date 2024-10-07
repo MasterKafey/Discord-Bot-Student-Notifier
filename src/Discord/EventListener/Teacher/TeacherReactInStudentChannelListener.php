@@ -36,13 +36,13 @@ class TeacherReactInStudentChannelListener extends AbstractDiscordListener
 
         $channelId = $messageReaction->channel_id;
 
-        $student = $this->entityManager->getRepository(Student::class)->findOneBy(['channelId' => $channelId]);
-
-        if (null === $student) {
+        $students = $this->entityManager->getRepository(Student::class)->findBy(['channelId' => $channelId]);
+        if (empty($students)) {
             return;
         }
-
-        $student->setUnseenMessageDateTime(null);
+        foreach ($students as $student) {
+            $student->setUnseenMessageDateTime(null);
+        }
         $this->entityManager->flush();
     }
 }
