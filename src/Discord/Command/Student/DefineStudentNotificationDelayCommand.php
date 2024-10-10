@@ -62,7 +62,7 @@ class DefineStudentNotificationDelayCommand extends AbstractDiscordCommand
         $student = $this->entityManager->getRepository(Student::class)->findOneBy(['memberId' => $studentId]);
 
         if (null === $student) {
-            return $interaction->respondWithMessage(MessageBuilder::new()->setContent("<@$studentId> n'est pas un étudiant, utiliser la commande /add-student"));
+            return $interaction->respondWithMessage(MessageBuilder::new()->setContent("<@$studentId> n'est pas un étudiant, utiliser la commande /set-student"));
         }
 
         $student->setIntervalNotification(new \DateInterval('P' . $dayNumber . 'D'));

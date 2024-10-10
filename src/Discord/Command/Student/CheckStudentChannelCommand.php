@@ -52,7 +52,7 @@ class CheckStudentChannelCommand extends AbstractDiscordCommand
         if (null === $student) {
             return $interaction->respondWithMessage(MessageBuilder::new()->setContent(implode("\n", [
                 "Cet utilisateur n'est pas un étudiant.",
-                "Si cela est une erreur, utilisez la commande /add-student <@$memberId> [salon] pour corriger ce probléme"
+                "Si cela est une erreur, utilisez la commande /set-student <@$memberId> [salon] pour corriger ce probléme"
             ])));
         }
 
@@ -66,7 +66,7 @@ class CheckStudentChannelCommand extends AbstractDiscordCommand
         ) {
             return $interaction->respondWithMessage(MessageBuilder::new()->setContent(implode("\n", [
                 "Le salon de l'étudiant n'est pas accessible",
-                "Vous pouvez définir le salon de l'étudiant avec la commande /add-student <@$memberId> [channel]"
+                "Vous pouvez définir le salon de l'étudiant avec la commande /set-student <@$memberId> [channel]"
             ])));
         }
 

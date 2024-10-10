@@ -17,7 +17,8 @@ use function React\Promise\all;
 class RunCommand extends Command
 {
     const COMMAND_TO_DELETE = [
-        'get-incomplete-evaluation'
+        'get-incomplete-evaluation',
+        'add-student'
     ];
 
     public function __construct(
