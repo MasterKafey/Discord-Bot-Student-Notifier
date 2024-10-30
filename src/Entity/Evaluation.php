@@ -14,7 +14,7 @@ class Evaluation
     #[ORM\Column(type: Types::INTEGER)]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(targetEntity: Student::class)]
+    #[ORM\ManyToOne(targetEntity: Student::class, inversedBy: 'evaluations')]
     private ?Student $student = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, length: 255)]

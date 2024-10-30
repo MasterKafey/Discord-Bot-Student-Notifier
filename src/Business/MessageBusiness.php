@@ -19,7 +19,7 @@ readonly class MessageBusiness
         $channel = $this->channelBusiness->getOutputChannel();
 
         if (null === $channel) {
-            throw new \Exception("Le salon de notifications n'est pas défini");
+            throw new \Exception("Le salon de notifications n'est pas défini, utilisez la commande /set-output-channel");
         }
 
         return $channel->sendMessage($message);

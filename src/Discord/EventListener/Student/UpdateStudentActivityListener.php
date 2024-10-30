@@ -31,6 +31,9 @@ class UpdateStudentActivityListener extends AbstractDiscordListener
             return;
         }
 
+        $this->entityManager->detach($student);
+        $student = $this->entityManager->getRepository(Student::class)->find($student->getId());
+
         if ($student->getChannelId() !== $message->channel_id) {
             return;
         }

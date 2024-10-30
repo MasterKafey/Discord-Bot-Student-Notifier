@@ -32,8 +32,12 @@ class CheckOutputChannelCommand extends AbstractDiscordCommand
     public function execute(Interaction $interaction): ?PromiseInterface
     {
         $channelId = $this->channelBusiness->getOutputChannel()?->id;
-        return $this->messageBusiness->log(MessageBuilder::new()->setContent("Le salon de notifications est défini ici <#$channelId>"))->then(function () use ($interaction) {
-            return $interaction->respondWithMessage(MessageBuilder::new()->setContent('Message envoyé avec succés!'));
-        });
+        try {
+            return $this->messageBusiness->log(MessageBuilder::new()->setContent("Le salon de notifications est défini ici <#$channelId>"))->then(function () use ($interaction) {
+                return $interaction->respondWithMessage(MessageBuilder::new()->setContent('Message envoyé avec succés!'));
+            });
+        } catch (\Exception $exception) {
+            return $interaction->respondWithMessage(MessageBuilder::new()->setContent($exception->getMessage()));
+        }
     }
 }

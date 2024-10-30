@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\StudentRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -53,9 +55,13 @@ class Student
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTime $unseenMessageDateTime = null;
 
+    #[ORM\OneToMany(targetEntity: Evaluation::class, mappedBy: 'student', cascade: ['persist', 'remove'])]
+    private Collection $evaluations;
+
     public function __construct()
     {
         $this->lastActivityDateTime = new \DateTime();
+        $this->evaluations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -203,6 +209,17 @@ class Student
     public function setUnseenMessageDateTime(?\DateTime $unseenMessageDateTime): self
     {
         $this->unseenMessageDateTime = $unseenMessageDateTime;
+        return $this;
+    }
+
+    public function getEvaluations(): Collection
+    {
+        return $this->evaluations;
+    }
+
+    public function setEvaluations(Collection $evaluations): self
+    {
+        $this->evaluations = $evaluations;
         return $this;
     }
 }
