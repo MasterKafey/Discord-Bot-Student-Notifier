@@ -26,7 +26,7 @@ class TeacherSendMessageInStudentChannelListener extends AbstractDiscordListener
 
     public function __invoke(Message $message): void
     {
-        $memberId = $message->member->id;
+        $memberId = $message->user_id;
         $teacherId = $this->configBusiness->get('teacher_account');
 
         if ($memberId !== $teacherId) {

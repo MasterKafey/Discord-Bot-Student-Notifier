@@ -37,4 +37,4 @@ RUN composer install --no-dev --optimize-autoloader
 USER root
 
 COPY .docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-CMD ["/usr/bin/supervisord"]
+CMD ["/usr/bin/supervisord", "-n"]
