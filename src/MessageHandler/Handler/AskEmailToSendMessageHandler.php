@@ -37,7 +37,7 @@ class AskEmailToSendMessageHandler
             $channel->sendMessage(MessageBuilder::new()
                 ->setContent("L'étudiant <@{$message->getStudent()->getMemberId()}> n'est plus actif, un email est en attente d'envoi")
                 ->addComponent(ActionRow::new()->addComponent($sendButton))
-            )->always(function () use ($discord) {
+            )->finally(function () use ($discord) {
                 $discord->close();
             });
         });

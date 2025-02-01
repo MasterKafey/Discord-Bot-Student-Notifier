@@ -51,6 +51,15 @@ class CheckTeacherActivityMessageHandler
         $discord->on('ready', function() use ($discord, $filteredStudents, $teacherAccount) {
             $promises = [];
             $teacherUser = $discord->users->get('id', $teacherAccount);
+            if ($teacherUser === null) {
+                $discord->getLogger()->error("$teacherAccount is not working, try again now");
+                $teacherUser = $discord->users->get('id', $teacherAccount);
+                if ($teacherUser === null) {
+                    $discord->getLogger()->error("$teacherAccount still not working, try again later");
+                } else {
+                    $discord->getLogger()->error('Second try worked');
+                }
+            }
 
             $lines = [];
             foreach ($filteredStudents as $student) {
@@ -60,7 +69,7 @@ class CheckTeacherActivityMessageHandler
                 $promises[] = $teacherUser->sendMessage(MessageBuilder::new()->setContent(implode("\n", $lines)));
             }
 
-            all($promises)->always(function() use ($discord) {
+            all($promises)->finally(function() use ($discord) {
                 $discord->close();
             });
         });

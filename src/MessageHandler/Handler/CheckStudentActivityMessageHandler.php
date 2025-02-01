@@ -30,6 +30,7 @@ class CheckStudentActivityMessageHandler
     public
     function __invoke(CheckStudentActivityMessage $message): void
     {
+        dump('test');
         /** @var Student[] $students */
         $students = $this->entityManager->getRepository(Student::class)->findBy(['tracking' => true]);
         $now = new \DateTime();

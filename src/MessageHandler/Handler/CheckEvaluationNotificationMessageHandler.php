@@ -44,7 +44,7 @@ class CheckEvaluationNotificationMessageHandler
                 ));
             }
 
-            return all($promises)->always(function () use ($discord) {
+            return all($promises)->finally(function () use ($discord) {
                 $discord->close();
             });
         });
