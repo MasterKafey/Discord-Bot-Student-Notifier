@@ -48,7 +48,7 @@ class CheckTeacherActivityMessageHandler
 
         $discord = DiscordFactory::getDiscord($this->discordBotToken);
 
-        $discord->on('init', function() use ($discord, $filteredStudents, $teacherAccount) {
+        $discord->on('init', function() use ($discord, $filteredStudents, $teacherAccount, $now) {
             $promises = [];
             $teacherUser = $discord->users->get('id', $teacherAccount);
             if ($teacherUser === null) {
@@ -73,17 +73,16 @@ class CheckTeacherActivityMessageHandler
                 $promises[] = $teacherUser->sendMessage(MessageBuilder::new()->setContent(implode("\n", $lines)));
             }
 
-            all($promises)->finally(function() use ($discord) {
+            all($promises)->finally(function() use ($discord, $filteredStudents, $now) {
+                foreach ($filteredStudents as $student) {
+                    $student->setUnseenMessageDateTime($now);
+                }
+
+                $this->entityManager->flush();
                 $discord->close();
             });
         });
 
         $discord->run();
-
-        foreach ($filteredStudents as $student) {
-            $student->setUnseenMessageDateTime($now);
-        }
-
-        $this->entityManager->flush();
     }
 }
