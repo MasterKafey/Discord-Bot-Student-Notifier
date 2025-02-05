@@ -56,6 +56,8 @@ class CheckTeacherActivityMessageHandler
                 $teacherUser = $discord->users->get('id', $teacherAccount);
                 if ($teacherUser === null) {
                     $discord->getLogger()->error("$teacherAccount still not working, try again later");
+                    $discord->close();
+                    return;
                 } else {
                     $discord->getLogger()->error('Second try worked');
                 }
