@@ -48,7 +48,7 @@ class CheckTeacherActivityMessageHandler
 
         $discord = DiscordFactory::getDiscord($this->discordBotToken);
 
-        $discord->on('ready', function() use ($discord, $filteredStudents, $teacherAccount) {
+        $discord->on('init', function() use ($discord, $filteredStudents, $teacherAccount) {
             $promises = [];
             $teacherUser = $discord->users->get('id', $teacherAccount);
             if ($teacherUser === null) {
@@ -59,8 +59,10 @@ class CheckTeacherActivityMessageHandler
                     $discord->close();
                     return;
                 } else {
-                    $discord->getLogger()->error('Second try worked');
+                    $discord->getLogger()->info('Second try worked');
                 }
+            } else {
+                $discord->getLogger()->info('First try worked');
             }
 
             $lines = [];

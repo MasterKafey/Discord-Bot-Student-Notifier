@@ -34,7 +34,7 @@ class CheckEvaluationPreviewMessageHandler
         }
         $discord = DiscordFactory::getDiscord($this->discordBotToken);
 
-        $discord->on('ready', function () use ($evaluations, $discord) {
+        $discord->on('init', function () use ($evaluations, $discord) {
             $promises = [];
             foreach ($evaluations as $evaluation) {
                 $channelId = $evaluation->getStudent()->getChannelId();

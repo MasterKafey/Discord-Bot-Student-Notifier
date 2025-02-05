@@ -78,7 +78,7 @@ class CheckStudentActivityMessageHandler
     function sendNotifications(array $students): void
     {
         $discord = DiscordFactory::getDiscord($this->discordBotToken);
-        $discord->on('ready', function () use ($students, $discord) {
+        $discord->on('init', function () use ($students, $discord) {
             $promises = [];
 
             foreach ($students as $student) {

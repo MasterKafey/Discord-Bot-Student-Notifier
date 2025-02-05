@@ -26,7 +26,7 @@ class AskEmailToSendMessageHandler
     {
         $discord = DiscordFactory::getDiscord($this->discordBotToken);
 
-        $discord->on('ready', function (Discord $discord) use ($message) {
+        $discord->on('init', function (Discord $discord) use ($message) {
             $outputChannelId = $this->configBusiness->get('output_channel');
             $channel = $discord->getChannel($outputChannelId);
 

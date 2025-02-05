@@ -32,7 +32,7 @@ class RunCommand extends Command
 
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->discord->on('ready', function () {
+        $this->discord->on('init', function () {
             $promises = [];
             foreach ($this->discord->guilds as $guild) {
                 foreach ($guild->commands as $command) {
